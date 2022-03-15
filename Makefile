@@ -1,34 +1,79 @@
+# ----------------- #
+#     VARIABLES     #
+# ----------------- #
+
 NAME	=	ircserv
 
-C_DIR	=	src
+SRC_LST	=	ircserv.cpp \
+			Server.cpp \
+			User.cpp \
+			Message.cpp \
+			Channel.cpp \
+			CmdHandler.cpp \
+			Command.cpp \
+			Cap.cpp \
+			Invite.cpp \
+			Join.cpp \
+			Kick.cpp \
+			List.cpp \
+			Mode.cpp \
+			Names.cpp \
+			Nick.cpp \
+			Notice.cpp \
+			Part.cpp \
+			Pass.cpp \
+			Ping.cpp \
+			PrivMsg.cpp \
+			Quit.cpp \
+			Topic.cpp \
+			UserCmd.cpp 		
+			
+SRC_DIR	=	$(shell find srcs -type d)
+SRCS	=	$(foreach dir, $(SRC_DIR), $(SRC_LST))
 
-O_DIR	=	obj
+OBJ_DIR	=	objs/
+OBJS	=	$(addprefix $(OBJ_DIR), $(SRC_LST:%.cpp=%.o))
 
-SRCS	=	${patsubst %, ${C_DIR}/%, ${C_FILES}}
+vpath %.cpp $(foreach dir, $(SRC_DIR)/, $(dir):)
 
-C_FILES	=	main.cpp
-
-OBJS	=	${patsubst ${C_DIR}/%, ${O_DIR}/%, ${SRCS:.cpp=.o}}
+# ----------------- #
+#    COMPILATION    #
+# ----------------- #
 
 CC		=	clang++
 
-CFLAGS	=	-I./inc/  -std=c++98 #-g3 -Wall -Wextra -Werror -fsanitize=address
+FLAGS	=	-Wall -Wextra -Werror  -std=c++98
 
-all:		${NAME}
+# ----------------- #
+#     FUNCTIONS     #
+# ----------------- #
 
-${NAME}:	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
+$(OBJ_DIR)%.o: %.cpp
+				@mkdir -p $(OBJ_DIR)
+				@$(CC) $(FLAGS) -o $@ -c $<
 
-${O_DIR}/%.o : ${C_DIR}/%.cpp
-			@mkdir -p obj
-			${CC} ${CFLAGS} -c $< -o $@
+$(NAME):	$(OBJS)
+				@$(CC) $(FLAGS) $(OBJS) -o $(NAME)		
+				@echo "\n\t\033[36;1m*.............................*"
+				@echo "\n\t*    Compilation $(NAME)    *\t   \033[32;1m--------->>> \033[4;5mComplete\033[0m"
+				@echo "\n\t\033[036;1m*.............................*\033[0m\n"
 
-.PHONY:		clean fclean re all
+all:		$(NAME)
 
-clean:
-			rm -rf ${O_DIR}
+# ----------------- #
+#       CLEAN       #
+# ----------------- #
+
+RM		=	rm -rf
+
+clean:	
+			@$(RM) $(OBJ_DIR)
+			@echo "\033[36;1m $(NAME) ------>>  clean\033[0m\n"
 
 fclean:		clean
-			rm -f ${NAME}
+			@$(RM) $(NAME)
+			@echo "\033[36;1m $(NAME) ------>>  fclean\033[0m\n"
 
 re:			fclean all
+
+.PHONY:		all clean fclean re
