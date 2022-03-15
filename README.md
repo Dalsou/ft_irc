@@ -1,9 +1,20 @@
 # my_ftirc
 
 A Faire maintenant :
-- ajouter check nickname & channel name
-- password
-- Mode Usermode
+- refaire check nickname & channel name
+- bien vérifier fichier server
+- password / deconnection du client si mauvais pass
+- modifier to_string
+- ajouter msg mode : mode/<#channel> [<mode>] by <sender>
+- ajouter msg à chaque user dans channel si changement de nick
+- vérifier qu'un operator perd son statut s'il est kick d'un channel
+- vérifier segfault quand user retiré du server
+- pas de message d'erreur quand mode est déjà mis
+
+Correction:
+- vérifier Kill client => besoin de rajoutyer commande KILL ?
+- vérifier Stop client
+
 
 #1 Server setup (creation du socket, listen)
 #2 Server run loop (poll & accept client)
@@ -59,10 +70,7 @@ Creation config pour garder info
 
 # utils
 - PING - Done
-- (MOTD)
 
-- (WHO)
-- (KILL)
 - (MODE)
 
 Sujet:
