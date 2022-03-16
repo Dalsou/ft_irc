@@ -26,9 +26,8 @@ int		Channel::setOnlyInvitation(User* user, int choice) {
 
 	if (!(this->getUser(user->_nickname)))
 		return 1;
-	if (this->_onlyInvitation == choice)
-		return 2;
-	this->_onlyInvitation = choice;
+	if (this->_onlyInvitation != choice)
+		this->_onlyInvitation = choice;
 	return 0;
 }
 

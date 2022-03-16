@@ -8,6 +8,7 @@ class Mode : public Command {
 	private:
 		int modeChan();
 		int modeUser();
+		void sendReply(Channel* channel, std::string msg) const;
 
 	public:
 		Mode();

@@ -220,6 +220,22 @@ bool	Server::checkPass(std::string password) {
 	return true;
 }
 
+bool	Server::checkNickname(std::string nickname) {
+
+	std::string						tmpNick = this->myToUpper(nickname);
+	std::string						nick;
+	std::map<int, User *>::iterator	it = this->_user_lst.begin();	
+	std::map<int, User *>::iterator	ite = this->_user_lst.end();
+
+	for (; it != ite ; ++it){
+		nick = this->myToUpper((*it).second->_nickname);
+		if (nick == tmpNick)
+			return false;
+		nick.clear();
+	}
+	return true;
+}
+
 // * ****** Channel Functions ****** * //
 
 Channel*	Server::createChannel(std::string channelName, User* op) {
@@ -252,4 +268,15 @@ void	Server::removeUser(User* user) {
 		delete this->_user_lst[fd];
 		this->_user_lst.erase(fd);
 	}
+}
+
+std::string		Server::myToUpper(std::string string) {
+
+	std::string				tmpString(string);
+	std::string::iterator	it = string.begin();
+	std::string::iterator	ite = string.end();
+
+	for (; it != ite; ++it) 
+		*it = std::toupper(*it);
+	return (tmpString);
 }

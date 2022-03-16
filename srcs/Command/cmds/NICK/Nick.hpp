@@ -7,6 +7,8 @@ class Nick : public Command {
 
 	private:
 		void registerUser(User* user);
+		void sendReply(std::string msg) const;
+		
 	public:
 		Nick();
 		virtual ~Nick();

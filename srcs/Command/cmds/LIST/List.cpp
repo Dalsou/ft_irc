@@ -16,7 +16,10 @@ void	List::execute() {
 	std::vector<Channel *>::iterator	ite = channels.end();
 
 	for (; it != ite; ++it) {
-		std::string reply = "322 * #" + (*it)->getName() + " " + std::to_string((*it)->getUsers().size());
+
+		std::stringstream	ss;
+		ss << "322 * #" << (*it)->getName() << " " << (*it)->getUsers().size();
+		std::string reply = ss.str();
 		this->_sender->getReply(reply);
 	}
 	this->_sender->getReply("323 * :End of LIST");

@@ -13,13 +13,21 @@ void	Nick::execute() {
 
 	std::string	oldNick = this->_sender->_nickname;
 	std::string newNick = this->_args[1];
-	// check si nick deja pris à faire
+	
+	if (this->_server->checkNickname(newNick) == false)
+		throw ERR_NICKNAMEINUSE(newNick);
+	
+	if (this->_sender->_registered == true) {
+		std::string reply = this->_sender->getPrefix() + " " + this->getName() + " :" + newNick.substr(0, 9);
+		this->sendReply(reply);
+	}
 
-	if (oldNick != "")
-		this->_sender->sendMsg(this->_sender, "NICK " + newNick.substr(0, 9));
 	this->_sender->setNickname(newNick);
-	if (this->_sender->_registered == false)
+	if (this->_sender->_registered == false) {
+		std::string reply = this->_sender->getPrefix() + " " + this->getName() + " :" + newNick.substr(0, 9);
+		this->_sender->getReply(reply);
 		this->registerUser(this->_sender);
+	}
 }
 
 void Nick::registerUser(User* usr) {
@@ -44,4 +52,21 @@ void Nick::registerUser(User* usr) {
 	send(usr->_socketFd, ss.str().c_str(), ss.str().size(), 0);
 
 	std::cout << COLOR_GREEN << usr->_nickname << " succesfully registered !" << COLOR_RESET << std::endl;
+}
+
+void	Nick::sendReply(std::string msg) const {
+
+	std::vector<Channel *>				chan_lst = this->_sender->_channels;
+	std::vector<Channel *>::iterator	chan_it = chan_lst.begin();
+	std::vector<Channel *>::iterator	chan_ite = chan_lst.end();
+
+	for (; chan_it != chan_ite; ++chan_it) {
+
+		std::vector<User *>				user_lst = (*chan_it)->getUsers();
+		std::vector<User *>::iterator	it = user_lst.begin();
+		std::vector<User *>::iterator	ite = user_lst.end();
+
+		for (; it != ite; ++it)
+			(*it)->getReply(msg);
+	}
 }

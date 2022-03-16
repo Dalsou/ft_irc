@@ -9,6 +9,7 @@ class Command;
 #include "../../ircserv.hpp"
 
 // Reply code
+#define RPL_CHANNELMODEIS(channel, mode, mode_params) ("324 * " + channel + " " + mode + " " + mode_params)
 
 // Error code + message
 #define ERR_NOSUCHNICK(nickname)				("401 * " + nickname + " :No such nick/channel")

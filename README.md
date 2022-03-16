@@ -1,19 +1,26 @@
 # my_ftirc
 
 A Faire maintenant :
-- refaire check nickname & channel name
 - bien vérifier fichier server
 - password / deconnection du client si mauvais pass
-- modifier to_string
-- ajouter msg mode : mode/<#channel> [<mode>] by <sender>
-- ajouter msg à chaque user dans channel si changement de nick
 - vérifier qu'un operator perd son statut s'il est kick d'un channel
 - vérifier segfault quand user retiré du server
-- pas de message d'erreur quand mode est déjà mis
+- bien vérifier les différent print
+- rajouter mode USER
+- rajouter Names + operator status quand join channel
 
 Correction:
 - vérifier Kill client => besoin de rajoutyer commande KILL ?
 - vérifier Stop client
+
+Amelie actuellement sur :
+- refaire check nickname / ajouté mais marche vraiment pas bien / erreur chelou
+- ajouter msg à chaque user dans channel si changement de nick
+
+Fait:
+- modifier to_string
+- ajouter msg mode : mode/<#channel> [<mode>] by <sender>
+- pas de message d'erreur quand mode est déjà mis
 
 
 #1 Server setup (creation du socket, listen)

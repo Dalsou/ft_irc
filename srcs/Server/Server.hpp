@@ -30,6 +30,7 @@ class Server {
 		int		acceptClient();
 		int		receiveMsg(int index);
 		void	handleCmd(int client_fd, const Message& msg);
+		std::string		myToUpper(std::string string);
 
 	public:
 
@@ -45,16 +46,17 @@ class Server {
 		Channel*		getChannel(std::string chanName);
 		User*			getUser(std::string userName);
 
-		int		setUp();
-		int		start();
-		void	stop();
+		int				setUp();
+		int				start();
+		void			stop();
 
-		bool	checkPass(std::string password);
+		bool			checkPass(std::string password);
+		bool			checkNickname(std::string nickname);
 
-		Channel*	createChannel(std::string channelName, User* op);
-		void		deleteChannel(Channel* channel);
+		Channel*		createChannel(std::string channelName, User* op);
+		void			deleteChannel(Channel* channel);
 
-		void		removeUser(User* user);
+		void			removeUser(User* user);
 };
 
 #endif
